@@ -33,3 +33,6 @@
 * 시나리오 1
   * distance : 905.9
   * failed_requests_count : 55.0
+* 시나리오 2
+  * distance : 1575.8
+  * failed_requests_count : 1297
