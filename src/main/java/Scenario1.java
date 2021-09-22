@@ -15,19 +15,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class Application {
+public class Scenario1 {
     private static final ModelMapper modelMapper = new ModelMapper();
     private static int[][] startPosition = {{1, 1}, {3, 3}, {1, 3}, {3, 1}, {2, 2}};
     private static int[][] rangeY = {{0, 2}, {2, 4}, {0, 2}, {2, 4}, {1, 3}};
     private static int[][] rangeX = {{0, 2}, {2, 4}, {2, 4}, {0, 2}, {1, 3}};
 
     public static void main(String[] args) {
-        StartResponse start = RestApi.startApi(new StartRequest(1));
+        StartResponse start = RestApi.startApi(new StartRequest(2));
         log.debug("start : {}", start);
 
         Trucks trucks = requestTrucksAndMapping(start);
         for(int i = 0; i < 5; i++) {
             Truck truck = trucks.get(i);
+            truck.setRow(5);
             truck.move(startPosition[i][0], startPosition[i][1]);
         }
 
@@ -46,6 +47,7 @@ public class Application {
 
             for(int i = 0; i < 5; i++) {
                 Truck truck = trucks.get(i);
+                truck.setRow(5);
                 Location min = null;
 
                 for(int y = rangeY[i][0]; y <= rangeY[i][1]; y++) {
@@ -70,7 +72,7 @@ public class Application {
                     }
                 }
 
-                if(max != null || max.getBikeCount() != min.getBikeCount()) {
+                if(min != null && max != null && max.getBikeCount() != min.getBikeCount()) {
                     transferMaxToMin(truck, max, min);
                 }
             }

@@ -10,6 +10,7 @@ import java.util.List;
 
 @Getter @Setter
 public class Truck {
+    private int row;
     private int id;
     private int locationId;
     private int bikeCount;
@@ -19,8 +20,12 @@ public class Truck {
         command = new ArrayList<>();
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
     public void move(int y, int x) {
-        int[] truckPosition = LocationUtils.position(locationId);
+        int[] truckPosition = LocationUtils.position(locationId, row);
         int diffY = Math.abs(truckPosition[0] - y);
         int diffX = Math.abs(truckPosition[1] - x);
 
@@ -44,7 +49,7 @@ public class Truck {
             }
         }
 
-        locationId = LocationUtils.locationId(y, x);
+        locationId = LocationUtils.locationId(y, x, row);
     }
 
     public void move(Location location) {
@@ -68,7 +73,7 @@ public class Truck {
     }
 
     public int[] getPosition() {
-        return LocationUtils.position(locationId);
+        return LocationUtils.position(locationId, row);
     }
 
     @SneakyThrows
